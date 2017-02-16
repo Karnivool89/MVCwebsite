@@ -51,8 +51,9 @@ namespace MvcMovie.Controllers
 
         // Right now, when a movie is created it then passes the inputted Movie Title to the imdbCall method,
         // which then calls the imdbSearch method to gather the resourceID from the title. imdbSearch then
-        // passes the resourceID back to imdbCall which allows it to gather specific data from the JSON object
-        // (in this case, duration). 
+        // passes the resourceID back to imdbCall, which calls the specific movie info. This call returns a string
+        // which is then passed back to the createMovie method, and only then is the string parsed into an object
+        // which can then have specific values called and assigned to the movie.
 
         private async Task<string> imdbCall(string searchTerm)
         {
@@ -65,8 +66,7 @@ namespace MvcMovie.Controllers
             HttpResponseMessage response = await client.GetAsync(_address);
             response.EnsureSuccessStatusCode(); 
             string content = await response.Content.ReadAsStringAsync();
-            dynamic movieiNFO = JObject.Parse(content);
-            return movieiNFO.data.duration;
+            return content;
             
         }
 
@@ -123,7 +123,9 @@ namespace MvcMovie.Controllers
             if (ModelState.IsValid)
             {
                 // 
-                movie.Duration = await imdbCall(movie.Title);
+                string content = await imdbCall(movie.Title);
+                dynamic movieiNFO = JObject.Parse(content);
+                movie.Duration = movieiNFO.data.duration;
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
