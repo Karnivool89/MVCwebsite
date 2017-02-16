@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-MvcMovie-918c4404-3c40-4e81-901f-fa762816d685",
 
   "dependencies": {
@@ -41,11 +41,12 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc":  {
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
-  },
+    },
+    "Newtonsoft.Json": "9.0.1",
+    "System.Net.Http": "4.3.0"  },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

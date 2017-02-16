@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace MvcMovie.Controllers
 {
@@ -47,7 +49,23 @@ namespace MvcMovie.Controllers
             return View(movieGenreVM);
         }
 
+        private async Task<string> ImdbCall(string resourceID)
+        {
+            // API key: f90e14f3-9b18-47be-b213-75da0f686986
+            string imdbUrl = "http://imdb.wemakesites.net/api/{0}?api_key={1}";
 
+            string _address = string.Format(imdbUrl, resourceID, "f90e14f3-9b18-47be-b213-75da0f686986");
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(_address);
+            response.EnsureSuccessStatusCode(); 
+            string content = await response.Content.ReadAsStringAsync();
+            // trying to print to console for debugging
+            dynamic movieiNFO = JObject.Parse(content);
+            // returning a substring for testing purposes
+            return movieiNFO.data.duration;
+            
+        }
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -77,10 +95,12 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Genre,Price,ReleaseDate,Title, Rating")] Movie movie)
+        public async Task<IActionResult> Create([Bind("ID,Genre,Price,ReleaseDate,Title, Rating, Duration")] Movie movie)
         {
             if (ModelState.IsValid)
             {
+                // "tt2488496" hard-coded for testing
+                movie.Duration = await ImdbCall("tt2488496");
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -109,7 +129,7 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Genre,Price,ReleaseDate,Title,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Genre,Price,ReleaseDate,Title,Rating, Duration")] Movie movie)
         {
             if (id != movie.ID)
             {
@@ -170,6 +190,7 @@ namespace MvcMovie.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movie.Any(e => e.ID == id);
-        }
+        } 
+
     }
 }

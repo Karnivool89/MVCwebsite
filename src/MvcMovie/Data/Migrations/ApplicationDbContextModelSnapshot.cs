@@ -177,15 +177,22 @@ namespace MvcMovie.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Genre");
+                    b.Property<string>("Duration")
+                        .HasAnnotation("MaxLength", 10);
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 30);
 
                     b.Property<decimal>("Price");
 
-                    b.Property<string>("Rating");
+                    b.Property<string>("Rating")
+                        .HasAnnotation("MaxLength", 5);
 
                     b.Property<DateTime>("ReleaseDate");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .HasAnnotation("MaxLength", 60);
 
                     b.HasKey("ID");
 

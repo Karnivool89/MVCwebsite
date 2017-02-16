@@ -10,6 +10,9 @@ namespace MvcMovie.Models
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
 
+        [StringLength(10)]
+        public string Duration { get; set; }
+
         [Display(Name = "Release Date"), DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
