@@ -49,10 +49,15 @@ namespace MvcMovie.Controllers
             return View(movieGenreVM);
         }
 
-        private async Task<string> ImdbCall(string resourceID)
+        // Right now, when a movie is created it then passes the inputted Movie Title to the imdbCall method,
+        // which then calls the imdbSearch method to gather the resourceID from the title. imdbSearch then
+        // passes the resourceID back to imdbCall which allows it to gather specific data from the JSON object
+        // (in this case, duration). 
+
+        private async Task<string> imdbCall(string searchTerm)
         {
-            // API key: f90e14f3-9b18-47be-b213-75da0f686986
             string imdbUrl = "http://imdb.wemakesites.net/api/{0}?api_key={1}";
+            string resourceID = await imdbSearch(searchTerm);
 
             string _address = string.Format(imdbUrl, resourceID, "f90e14f3-9b18-47be-b213-75da0f686986");
 
@@ -60,11 +65,29 @@ namespace MvcMovie.Controllers
             HttpResponseMessage response = await client.GetAsync(_address);
             response.EnsureSuccessStatusCode(); 
             string content = await response.Content.ReadAsStringAsync();
-            // trying to print to console for debugging
             dynamic movieiNFO = JObject.Parse(content);
-            // returning a substring for testing purposes
             return movieiNFO.data.duration;
             
+        }
+
+        private async Task<string> imdbSearch(string searchTerm)
+        {
+            string imdbUrl = "http://imdb.wemakesites.net/api/search?q={0}&api_key={1}";
+
+            string formattedSearchTerm = searchTerm.Replace(" ", "+");
+            string _address = string.Format(imdbUrl, formattedSearchTerm, "f90e14f3-9b18-47be-b213-75da0f686986");
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(_address);
+            response.EnsureSuccessStatusCode();
+            string content = await response.Content.ReadAsStringAsync();
+            dynamic movieINFO = JObject.Parse(content);
+            foreach (var result in movieINFO.data.results.titles)
+            {
+                if (result.title == searchTerm)
+                    return result.id;
+            }
+            return "Movie not found";
         }
 
         // GET: Movies/Details/5
@@ -95,12 +118,12 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Genre,Price,ReleaseDate,Title, Rating, Duration")] Movie movie)
+        public async Task<IActionResult> Create([Bind("ID,Genre,Price,ReleaseDate,Title,Rating,Duration")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-                // "tt2488496" hard-coded for testing
-                movie.Duration = await ImdbCall("tt2488496");
+                // 
+                movie.Duration = await imdbCall(movie.Title);
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
