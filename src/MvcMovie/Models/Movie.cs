@@ -16,7 +16,7 @@ namespace MvcMovie.Models
         [Display(Name = "Release Date")]
         public string ReleaseDate { get; set; }
 
-        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$"), Required, StringLength(30)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$"), StringLength(30)]
         public string Genre { get; set; }
 
         [Range(1, 100), DataType(DataType.Currency)]

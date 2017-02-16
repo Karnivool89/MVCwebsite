@@ -127,6 +127,8 @@ namespace MvcMovie.Controllers
                 dynamic movieiNFO = JObject.Parse(content);
                 movie.Duration = movieiNFO.data.duration;
                 movie.ReleaseDate = movieiNFO.data.released;
+                // Only adding 1 genre for now
+                movie.Genre = movieiNFO.data.genres[0];
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
