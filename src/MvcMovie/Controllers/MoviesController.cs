@@ -126,6 +126,7 @@ namespace MvcMovie.Controllers
                 string content = await imdbCall(movie.Title);
                 dynamic movieiNFO = JObject.Parse(content);
                 movie.Duration = movieiNFO.data.duration;
+                movie.ReleaseDate = movieiNFO.data.released;
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

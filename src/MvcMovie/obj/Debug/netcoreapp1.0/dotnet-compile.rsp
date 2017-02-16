@@ -245,6 +245,8 @@ C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Dat
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\20170208210703_Rating.Designer.cs
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\20170213183755_addCast.cs
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\20170213183755_addCast.Designer.cs
+C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\20170216182047_changeReleaseDate.cs
+C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\20170216182047_changeReleaseDate.Designer.cs
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Data\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Models\ApplicationUser.cs
 C:\Users\Matthew\Documents\Visual Studio 2015\Projects\MvcMovie\src\MvcMovie\Models\Movie.cs

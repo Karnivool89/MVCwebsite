@@ -13,8 +13,8 @@ namespace MvcMovie.Models
         [StringLength(10)]
         public string Duration { get; set; }
 
-        [Display(Name = "Release Date"), DataType(DataType.Date)]
-        public DateTime ReleaseDate { get; set; }
+        [Display(Name = "Release Date")]
+        public string ReleaseDate { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$"), Required, StringLength(30)]
         public string Genre { get; set; }

@@ -189,7 +189,7 @@ namespace MvcMovie.Data.Migrations
                     b.Property<string>("Rating")
                         .HasAnnotation("MaxLength", 5);
 
-                    b.Property<DateTime>("ReleaseDate");
+                    b.Property<string>("ReleaseDate");
 
                     b.Property<string>("Title")
                         .HasAnnotation("MaxLength", 60);
