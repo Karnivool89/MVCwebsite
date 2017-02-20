@@ -6,11 +6,22 @@
 
 <h2>Create</h2>
 
+<script type="text/javascript">
+    add();
+</script>
+
 <form asp-action="Create">
     <div class="form-horizontal">
         <h4>Movie</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" id="titleInput"/>
+                <span asp-validation-for="Title" class="text-danger" />
+            </div>
+        </div>
         <div class="form-group">
             <label asp-for="Genre" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -40,13 +51,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Title" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="Rating" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Rating" class="form-control" />
@@ -64,7 +68,23 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- 
+    <script src="@Url.Content("~/Scripts/imdbFetch.js")"> </script>
+    -->
+    <!-- OR:
+    
+    <script type="text/javascript" language="JavaScript">
+
+        $(document).ready(function () {
+
+            window.alert("HELLO!")
+
+        })
+
+    </script>
+
+    -->
+    
 }
