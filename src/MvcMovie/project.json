@@ -47,7 +47,8 @@
     },
     "Newtonsoft.Json": "9.0.1",
     "System.Net.Http": "4.3.0",
-    "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3"  },
+    "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3",
+    "jQuery": "3.1.1"  },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

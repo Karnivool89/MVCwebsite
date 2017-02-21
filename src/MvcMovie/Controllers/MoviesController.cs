@@ -55,7 +55,8 @@ namespace MvcMovie.Controllers
         // which is then passed back to the createMovie method, and only then is the string parsed into an object
         // which can then have specific values called and assigned to the movie.
 
-        private async Task<string> imdbCall(string searchTerm)
+            //Needed to be public to be called from imdbFetch.js...is this bad practice?
+        public async Task<string> imdbCall(string searchTerm)
         {
             string imdbUrl = "http://imdb.wemakesites.net/api/{0}?api_key={1}";
             string resourceID = await imdbSearch(searchTerm);
@@ -125,10 +126,6 @@ namespace MvcMovie.Controllers
                 // 
                 string content = await imdbCall(movie.Title);
                 dynamic movieiNFO = JObject.Parse(content);
-                movie.Duration = movieiNFO.data.duration;
-                movie.ReleaseDate = movieiNFO.data.released;
-                // Only adding 1 genre for now
-                movie.Genre = movieiNFO.data.genres[0];
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
